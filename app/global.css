@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Grandstander:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=Rasa:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #1a1a2e;
+  --color-secondary: #E8F4E8;
+  --color-accent: #2D7A4F;
+  --color-neutral: #FAFAF8;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-neutral text-grey font-outfit overflow-x-hidden;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Bubble animations */
+@keyframes bubblePeekLeft {
+  0%, 100% { transform: translate(-50%, -50%) translateX(-20%) scale(0.9); opacity: 0.6; }
+  50% { transform: translate(-50%, -50%) translateX(0%) scale(1); opacity: 1; }
+}
+
+@keyframes bubblePeekRight {
+  0%, 100% { transform: translate(50%, -50%) translateX(20%) scale(0.9); opacity: 0.6; }
+  50% { transform: translate(50%, -50%) translateX(0%) scale(1); opacity: 1; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes quiver {
+  0%, 100% { transform: rotate(-1deg) translateY(0px); }
+  25% { transform: rotate(1deg) translateY(-5px); }
+  50% { transform: rotate(-0.5deg) translateY(-3px); }
+  75% { transform: rotate(0.5deg) translateY(-7px); }
+}
+
+.animate-bubble-peek-left {
+  animation: bubblePeekLeft 3s ease-in-out infinite;
+  transform-origin: center;
+}
+
+.animate-bubble-peek-right {
+  animation: bubblePeekRight 3s ease-in-out infinite;
+  transform-origin: center;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-quiver {
+  animation: quiver 4s ease-in-out infinite;
+}
+
+/* Navbar scroll effect */
+.navbar-scrolled {
+  @apply shadow-md py-3;
+}
+
+/* Smooth scroll offset for sticky nav */
+section[id] {
+  scroll-margin-top: 80px;
+}
