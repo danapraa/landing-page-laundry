@@ -1,78 +1,72 @@
 # Kios Laundry
 
-Landing page sederhana untuk jasa laundry menggunakan Next.js dan Tailwind CSS.
+Landing page untuk jasa laundry, dibangun dengan Next.js 14 dan Tailwind CSS. Ringan, responsif, dan mudah dikustomisasi.
 
 ## Fitur
-- Responsive
-- Hero section
-- Paket layanan laundry
-- WhatsApp button
-- Sticky navbar
-- Animasi sederhana
+
+- **Responsive** — tampil optimal di semua ukuran layar
+- **Hero section** — bagian utama yang langsung menarik perhatian pengunjung
+- **Paket layanan** — tampilkan daftar layanan beserta harga dengan jelas
+- **WhatsApp button** — tombol CTA langsung terhubung ke nomor WhatsApp
+- **Sticky navbar** — navigasi tetap terlihat saat scroll
+- **Animasi** — transisi halus menggunakan Framer Motion
 
 ## Tech Stack
-- Next.js 14
-- TypeScript
-- Tailwind CSS
-- Framer Motion
 
-## Cara Menjalankan
+- [Next.js 14](https://nextjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Framer Motion](https://www.framer.com/motion/)
 
-Install dependency:
+## Memulai
+
+Clone repository dan install dependency:
 
 ```bash
 npm install
 ```
 
-Jalankan project:
+Jalankan development server:
 
 ```bash
 npm run dev
 ```
 
-Buka di browser:
-
-```bash
-http://localhost:3000
-```
+Buka [http://localhost:3000](http://localhost:3000) di browser.
 
 ## Struktur Folder
 
-```bash
-app/
-components/
-public/
+```
+├── app/
+│   └── layout.tsx        # Metadata dan layout utama
+├── components/
+│   └── sections/
+│       └── Services.tsx  # Komponen daftar layanan & harga
+└── public/
 ```
 
-## Custom
+## Kustomisasi
 
-### Ganti nomor WhatsApp
-Cari:
+### Nomor WhatsApp
 
-```bash
+Cari string berikut di seluruh project dan ganti dengan nomor kamu:
+
+```
 6281234567890
 ```
 
-Lalu ganti dengan nomor sendiri.
+### Harga & Paket Layanan
 
-### Ganti harga layanan
-Edit file:
+Edit file `components/sections/Services.tsx` untuk mengubah nama layanan, harga, atau deskripsi.
 
-```bash
-components/sections/Services.tsx
-```
+### Metadata Website
 
-### Ganti metadata website
-Edit:
-
-```bash
-app/layout.tsx
-```
+Judul, deskripsi, dan metadata lainnya bisa diubah di `app/layout.tsx`.
 
 ## Deploy
 
-Project bisa deploy menggunakan Vercel.
+Project ini siap di-deploy ke [Vercel](https://vercel.com/) tanpa konfigurasi tambahan. Cukup hubungkan repository dan deploy.
 
-## Note
+## Catatan
 
-Project ini dibuat untuk latihan dan portfolio frontend.
+Project ini dibuat sebagai latihan dan bahan portfolio frontend. Bebas dimodifikasi sesuai kebutuhan.
