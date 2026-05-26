@@ -1,15 +1,15 @@
 # Kios Laundry
 
-Landing page untuk jasa laundry, dibangun dengan Next.js 14 dan Tailwind CSS. Ringan, responsif, dan mudah dikustomisasi.
+Landing page untuk laundry, dibangun dengan Next.js dan Tailwind CSS. Ringan, responsif, dan mudah dikustomisasi.
 
 ## Fitur
 
-- **Responsive** — tampil optimal di semua ukuran layar
-- **Hero section** — bagian utama yang langsung menarik perhatian pengunjung
-- **Paket layanan** — tampilkan daftar layanan beserta harga dengan jelas
-- **WhatsApp button** — tombol CTA langsung terhubung ke nomor WhatsApp
-- **Sticky navbar** — navigasi tetap terlihat saat scroll
-- **Animasi** — transisi halus menggunakan Framer Motion
+- **Responsive** 
+- **Hero section** 
+- **Paket layanan** 
+- **WhatsApp button** 
+- **Sticky navbar** 
+- **Animasi** 
 
 ## Tech Stack
 
@@ -63,10 +63,3 @@ Edit file `components/sections/Services.tsx` untuk mengubah nama layanan, harga,
 
 Judul, deskripsi, dan metadata lainnya bisa diubah di `app/layout.tsx`.
 
-## Deploy
-
-Project ini siap di-deploy ke [Vercel](https://vercel.com/) tanpa konfigurasi tambahan. Cukup hubungkan repository dan deploy.
-
-## Catatan
-
-Project ini dibuat sebagai latihan dan bahan portfolio frontend. Bebas dimodifikasi sesuai kebutuhan.
