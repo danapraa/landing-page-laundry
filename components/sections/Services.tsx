@@ -1,88 +1,113 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
+import { Playfair_Display, DM_Sans, DM_Mono } from "next/font/google";
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["400", "700", "900"],
+  variable: "--font-playfair",
+});
+
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  weight: ["300", "400", "500"],
+  variable: "--font-dm-sans",
+});
+
+const dmMono = DM_Mono({
+  subsets: ["latin"],
+  weight: ["300", "400", "500"],
+  variable: "--font-dm-mono",
+});
 
 const packages = [
   {
-    name: "SATUAN",
+    name: "Satuan",
     tagline: "Cocok untuk satu orang",
     price: "Rp 7.000",
-    unit: "/ kg",
-    color: "from-emerald-50 to-green-50",
-    accentColor: "bg-accent",
+    unit: "per kilogram",
     featured: false,
-    features: [
-      "Cuci & Kering",
-      "Lipat Rapi",
-      "Berat minimal 3 kg",
-      "Selesai 1×24 jam",
-    ],
-    notIncluded: ["Setrika", "Antar Jemput"],
+    features: ["Cuci & kering", "Lipat rapi", "Min. 3 kg", "Selesai 1×24 jam"],
+    notIncluded: ["Setrika", "Antar jemput"],
   },
   {
-    name: "REGULER",
+    name: "Reguler",
     tagline: "Paling banyak dipilih",
     price: "Rp 12.000",
-    unit: "/ kg",
-    color: "from-green-600 to-emerald-700",
-    accentColor: "bg-white",
+    unit: "per kilogram",
     featured: true,
     features: [
-      "Cuci, Kering & Setrika",
-      "Lipat & Packing Rapi",
-      "Berat minimal 3 kg",
+      "Cuci, kering & setrika",
+      "Lipat & packing rapi",
+      "Min. 3 kg",
       "Selesai 1×24 jam",
       "Express tersedia",
     ],
-    notIncluded: ["Antar Jemput"],
+    notIncluded: ["Antar jemput"],
   },
   {
-    name: "PREMIUM",
+    name: "Premium",
     tagline: "Layanan lengkap terbaik",
     price: "Rp 18.000",
-    unit: "/ kg",
-    color: "from-emerald-50 to-green-50",
-    accentColor: "bg-accent",
+    unit: "per kilogram",
     featured: false,
     features: [
-      "Cuci, Kering & Setrika",
-      "Lipat & Packing Premium",
-      "Antar Jemput Gratis*",
+      "Cuci, kering & setrika",
+      "Lipat & packing premium",
+      "Antar jemput gratis*",
       "Penanganan baju khusus",
       "Selesai 1×24 jam",
-      "Prioritas Express",
+      "Prioritas express",
     ],
     notIncluded: [],
   },
 ];
 
-const CheckIcon = ({ dark = false }: { dark?: boolean }) => (
-  <svg
-    className={`w-4 h-4 flex-shrink-0 ${dark ? "text-white" : "text-accent"}`}
-    fill="currentColor"
-    viewBox="0 0 20 20"
-  >
-    <path
-      fillRule="evenodd"
-      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-      clipRule="evenodd"
-    />
+const IconJas = () => (
+  <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M12 4l-7 5v3l4-1v19h16V11l4 1V9L22 4l-2.5 4h-5L12 4z" stroke="currentColor" strokeWidth="1.1" strokeLinejoin="round"/>
+    <path d="M14.5 8L17 6l2.5 2" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M13 30V20h8v10" stroke="currentColor" strokeWidth="1.1" strokeLinejoin="round"/>
+    <path d="M9 14h3M22 14h3" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/>
   </svg>
 );
 
-const XIcon = ({ dark = false }: { dark?: boolean }) => (
-  <svg
-    className={`w-4 h-4 flex-shrink-0 ${dark ? "text-white/40" : "text-gray-300"}`}
-    fill="currentColor"
-    viewBox="0 0 20 20"
-  >
-    <path
-      fillRule="evenodd"
-      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-      clipRule="evenodd"
-    />
+const IconGaun = () => (
+  <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M17 3c-1.5 0-2.5 1-2.5 2s1 2 2.5 2 2.5-1 2.5-2-1-2-2.5-2z" stroke="currentColor" strokeWidth="1.1"/>
+    <path d="M17 7v4" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round"/>
+    <path d="M11 11l-4 6h4l2 14h8l2-14h4l-4-6" stroke="currentColor" strokeWidth="1.1" strokeLinejoin="round"/>
+    <path d="M13 11h8" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round"/>
+    <path d="M14 17c0 3 1 6 3 8 2-2 3-5 3-8" stroke="currentColor" strokeWidth="0.9" strokeLinecap="round"/>
   </svg>
 );
+
+const IconSprei = () => (
+  <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <rect x="4" y="16" width="26" height="14" rx="1.5" stroke="currentColor" strokeWidth="1.1"/>
+    <path d="M4 20h26" stroke="currentColor" strokeWidth="0.9"/>
+    <path d="M7 16v-5a2 2 0 012-2h16a2 2 0 012 2v5" stroke="currentColor" strokeWidth="1.1"/>
+    <path d="M12 9c0-2 1-4 5-4s5 2 5 4" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/>
+    <path d="M9 23h4M9 27h7" stroke="currentColor" strokeWidth="0.9" strokeLinecap="round"/>
+  </svg>
+);
+
+const IconTas = () => (
+  <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M6 12h22v16a2 2 0 01-2 2H8a2 2 0 01-2-2V12z" stroke="currentColor" strokeWidth="1.1"/>
+    <path d="M6 12l3-6h16l3 6" stroke="currentColor" strokeWidth="1.1" strokeLinejoin="round"/>
+    <path d="M13 6v2a4 4 0 008 0V6" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/>
+    <path d="M10 18h14M10 22h9" stroke="currentColor" strokeWidth="0.9" strokeLinecap="round"/>
+  </svg>
+);
+
+const addons = [
+  { Icon: IconJas,   label: "Jas & Blazer",   price: "Rp 15.000/pcs" },
+  { Icon: IconGaun,  label: "Gaun & Kebaya",   price: "Rp 25.000/pcs" },
+  { Icon: IconSprei, label: "Sprei & Selimut", price: "Rp 20.000/pcs" },
+  { Icon: IconTas,   label: "Tas & Sepatu",    price: "Rp 30.000/pcs" },
+];
 
 export default function Services() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -95,9 +120,11 @@ export default function Services() {
             const cards = entry.target.querySelectorAll(".price-card");
             cards.forEach((card, i) => {
               setTimeout(() => {
-                card.classList.add("opacity-100", "translate-y-0");
-                card.classList.remove("opacity-0", "translate-y-10");
-              }, i * 200);
+                (card as HTMLElement).style.opacity = "1";
+                (card as HTMLElement).style.transform = card.classList.contains("featured-card")
+                  ? "translateY(-12px)"
+                  : "translateY(0)";
+              }, i * 150);
             });
           }
         });
@@ -112,162 +139,141 @@ export default function Services() {
     <section
       id="services"
       ref={sectionRef}
-      className="bg-neutral py-16 lg:py-24 px-6"
+      className={`${playfair.variable} ${dmSans.variable} ${dmMono.variable} bg-white py-20 lg:py-28 px-6`}
+      style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
     >
-      <div className="container mx-auto max-w-7xl">
-        {/* Header */}
-        <div className="text-center mb-14">
-          <span className="font-grandstander text-xs md:text-sm text-accent font-semibold tracking-widest uppercase mb-3 block">
-            Layanan & Harga
-          </span>
-          <h2 className="font-outfit font-bold text-3xl md:text-4xl lg:text-5xl text-grey">
-            Pilih Paket yang Sesuai
+      <div className="container mx-auto max-w-5xl">
+
+        {/* ── Header ── */}
+        <div className="mb-14">
+          <p style={{ fontFamily: "var(--font-dm-mono), monospace", fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "#888", marginBottom: 10 }}>
+            Layanan &amp; Harga
+          </p>
+          <h2 style={{ fontFamily: "var(--font-playfair), serif", fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 900, color: "#1a1a1a", lineHeight: 1.1, margin: "0 0 12px" }}>
+            Pilih paket<br />yang pas buat kamu.
           </h2>
-          <p className="mt-4 text-grey-light font-inter text-sm md:text-base max-w-lg mx-auto">
-            Semua paket menggunakan deterjen berkualitas dan mesin laundry modern.
+          <p style={{ fontSize: 14, color: "#777", fontWeight: 300, margin: 0 }}>
+            Semua paket pakai deterjen pilihan dan mesin laundry modern. Hasil bersih, dijamin.
           </p>
         </div>
 
-        {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+        {/* ── Cards Grid ── */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))" }}>
           {packages.map((pkg, i) => (
             <div
               key={pkg.name}
-              className={`price-card opacity-0 translate-y-10 transition-all duration-500 ease-out ${
-                pkg.featured ? "md:-mt-4 md:mb-4" : ""
-              }`}
+              className={`price-card ${pkg.featured ? "featured-card" : ""}`}
+              style={{
+                opacity: 0,
+                transform: "translateY(20px)",
+                transition: "opacity 0.5s ease, transform 0.5s ease",
+                display: "flex",
+                flexDirection: "column",
+                padding: "2rem 1.5rem",
+                gap: "1.25rem",
+                border: "0.5px solid #e0e0e0",
+                borderRadius:
+                  pkg.featured ? "14px"
+                  : i === 0 ? "16px 0 0 16px"
+                  : "0 16px 16px 0",
+                position: "relative",
+                zIndex: pkg.featured ? 2 : 1,
+                background: pkg.featured ? "#1a1a1a" : "#fff",
+                boxShadow: pkg.featured ? "0 24px 60px rgba(0,0,0,0.22)" : "none",
+                ...(pkg.featured ? { borderColor: "#1a1a1a" } : {}),
+              }}
             >
-              <div
-                className={`h-full rounded-3xl flex flex-col overflow-hidden shadow-sm hover:shadow-2xl transition-shadow duration-300 ${
-                  pkg.featured
-                    ? "bg-gradient-to-br " + pkg.color + " ring-2 ring-accent"
-                    : "bg-white border border-gray-100"
-                }`}
-              >
-                {pkg.featured && (
-                  <div className="bg-accent text-white text-center py-2 px-4">
-                    <span className="font-outfit font-semibold text-xs tracking-widest">
-                      ⭐ PALING POPULER
-                    </span>
-                  </div>
-                )}
+              {pkg.featured && (
+                <span style={{ fontFamily: "var(--font-dm-mono), monospace", fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", background: "#3d6b4f", color: "#d0f0d8", padding: "3px 10px", borderRadius: 20, display: "inline-block", width: "fit-content" }}>
+                  Paling populer
+                </span>
+              )}
 
-                <div className="p-7 lg:p-8 flex flex-col flex-1">
-                  {/* Package name */}
-                  <h3
-                    className={`font-grandstander font-semibold text-xl mb-1 ${
-                      pkg.featured ? "text-white" : "text-accent"
-                    }`}
-                  >
-                    {pkg.name}
-                  </h3>
-                  <p
-                    className={`font-inter text-sm mb-6 ${
-                      pkg.featured ? "text-white/80" : "text-grey-light"
-                    }`}
-                  >
-                    {pkg.tagline}
-                  </p>
-
-                  {/* Price */}
-                  <div className="mb-8">
-                    <div className="flex items-end gap-1">
-                      <span
-                        className={`font-rasa font-bold text-4xl ${
-                          pkg.featured ? "text-white" : "text-grey"
-                        }`}
-                      >
-                        {pkg.price}
-                      </span>
-                    </div>
-                    <span
-                      className={`font-inter text-sm ${
-                        pkg.featured ? "text-white/70" : "text-grey-light"
-                      }`}
-                    >
-                      {pkg.unit}
-                    </span>
-                  </div>
-
-                  {/* Features */}
-                  <ul className="space-y-3 mb-8 flex-1">
-                    {pkg.features.map((feature) => (
-                      <li key={feature} className="flex items-center gap-3">
-                        <CheckIcon dark={pkg.featured} />
-                        <span
-                          className={`font-inter text-sm ${
-                            pkg.featured ? "text-white" : "text-grey"
-                          }`}
-                        >
-                          {feature}
-                        </span>
-                      </li>
-                    ))}
-                    {pkg.notIncluded.map((feature) => (
-                      <li key={feature} className="flex items-center gap-3">
-                        <XIcon dark={pkg.featured} />
-                        <span
-                          className={`font-inter text-sm line-through ${
-                            pkg.featured ? "text-white/40" : "text-gray-300"
-                          }`}
-                        >
-                          {feature}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  {/* CTA */}
-                  <a
-                    href="https://wa.me/6281234567890"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`w-full py-3.5 rounded-2xl font-outfit font-semibold text-sm text-center transition-all duration-200 hover:-translate-y-0.5 ${
-                      pkg.featured
-                        ? "bg-white text-accent hover:shadow-xl"
-                        : "bg-accent text-white hover:bg-accent-light hover:shadow-lg hover:shadow-accent/20"
-                    }`}
-                  >
-                    Pilih Paket Ini
-                  </a>
-                </div>
+              <div>
+                <p style={{ fontFamily: "var(--font-playfair), serif", fontSize: 22, fontWeight: 700, color: pkg.featured ? "#f5f0e8" : "#1a1a1a", margin: "0 0 4px" }}>
+                  {pkg.name}
+                </p>
+                <p style={{ fontSize: 12, fontWeight: 300, color: pkg.featured ? "#b8b09e" : "#999", margin: 0 }}>
+                  {pkg.tagline}
+                </p>
               </div>
+
+              <div style={{ borderTop: `0.5px solid ${pkg.featured ? "#3a3a3a" : "#eee"}`, paddingTop: "1.1rem" }}>
+                <p style={{ fontFamily: "var(--font-playfair), serif", fontSize: 30, fontWeight: 900, color: pkg.featured ? "#f5f0e8" : "#1a1a1a", lineHeight: 1, margin: "0 0 4px" }}>
+                  {pkg.price}
+                </p>
+                <p style={{ fontSize: 12, fontWeight: 300, color: pkg.featured ? "#8a8278" : "#aaa", margin: 0 }}>
+                  {pkg.unit}
+                </p>
+              </div>
+
+              <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 9, flex: 1 }}>
+                {pkg.features.map((f) => (
+                  <li key={f} style={{ display: "flex", alignItems: "flex-start", gap: 8, fontSize: 13, color: pkg.featured ? "#d8d0c5" : "#333" }}>
+                    <span style={{ width: 6, height: 6, borderRadius: "50%", background: pkg.featured ? "#6dbb85" : "#3d6b4f", flexShrink: 0, marginTop: 5, display: "inline-block" }} />
+                    {f}
+                  </li>
+                ))}
+                {pkg.notIncluded.map((f) => (
+                  <li key={f} style={{ display: "flex", alignItems: "flex-start", gap: 8, fontSize: 13, color: pkg.featured ? "#4a4540" : "#ccc", textDecoration: "line-through" }}>
+                    <span style={{ width: 6, height: 6, borderRadius: "50%", background: pkg.featured ? "#3a3a3a" : "#ddd", flexShrink: 0, marginTop: 5, display: "inline-block" }} />
+                    {f}
+                  </li>
+                ))}
+              </ul>
+
+              <a
+                href="https://wa.me/6281234567890"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "block",
+                  textAlign: "center",
+                  padding: "11px 0",
+                  borderRadius: 8,
+                  fontSize: 13,
+                  fontWeight: 500,
+                  textDecoration: "none",
+                  letterSpacing: "0.03em",
+                  border: `0.5px solid ${pkg.featured ? "#f5f0e8" : "#ccc"}`,
+                  background: pkg.featured ? "#f5f0e8" : "transparent",
+                  color: pkg.featured ? "#1a1a1a" : "#333",
+                  transition: "opacity 0.15s, transform 0.15s",
+                }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLAnchorElement).style.opacity = "0.8";
+                  (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(-1px)";
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLAnchorElement).style.opacity = "1";
+                  (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(0)";
+                }}
+              >
+                Pilih paket ini
+              </a>
             </div>
           ))}
         </div>
 
-        {/* Note */}
-        <p className="text-center text-xs text-grey-light font-inter mt-8">
-          *Antar jemput gratis untuk radius 3 km dari kios. Harga belum termasuk PPN.
-        </p>
-
-        {/* Additional services */}
-        <div className="mt-16 bg-secondary rounded-3xl p-8 lg:p-10">
-          <h3 className="font-outfit font-bold text-xl text-grey text-center mb-8">
-            Layanan Tambahan
-          </h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[
-              { icon: "👔", label: "Jas & Blazer", price: "Rp 15.000/pcs" },
-              { icon: "👗", label: "Gaun & Kebaya", price: "Rp 25.000/pcs" },
-              { icon: "🛏️", label: "Sprei & Selimut", price: "Rp 20.000/pcs" },
-              { icon: "🎒", label: "Tas & Sepatu", price: "Rp 30.000/pcs" },
-            ].map((item) => (
-              <div
-                key={item.label}
-                className="bg-white rounded-2xl p-4 text-center hover:shadow-md transition-shadow duration-200"
-              >
-                <div className="text-3xl mb-2">{item.icon}</div>
-                <div className="font-outfit font-semibold text-sm text-grey mb-1">
-                  {item.label}
-                </div>
-                <div className="font-inter text-xs text-accent font-semibold">
-                  {item.price}
-                </div>
+        {/* ── Addons ── */}
+        <div style={{ marginTop: "2.5rem", borderTop: "0.5px solid #e0e0e0", paddingTop: "2rem" }}>
+          <p style={{ fontFamily: "var(--font-dm-mono), monospace", fontSize: 11, letterSpacing: "0.15em", textTransform: "uppercase", color: "#aaa", marginBottom: "1.2rem" }}>
+            Layanan tambahan
+          </p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, minmax(0, 1fr))", gap: 10 }}>
+            {addons.map(({ Icon, label, price }) => (
+              <div key={label} style={{ padding: "14px 12px", border: "0.5px solid #e0e0e0", borderRadius: 10, background: "#fff", color: "#1a1a1a" }}>
+                <Icon />
+                <p style={{ fontSize: 12, fontWeight: 500, color: "#1a1a1a", margin: "8px 0 3px" }}>{label}</p>
+                <p style={{ fontFamily: "var(--font-dm-mono), monospace", fontSize: 11, color: "#3d6b4f", margin: 0 }}>{price}</p>
               </div>
             ))}
           </div>
+          <p style={{ fontSize: 11, color: "#aaa", marginTop: "1.2rem", fontWeight: 300 }}>
+            *Antar jemput gratis radius 3 km dari kios. Harga belum termasuk PPN.
+          </p>
         </div>
+
       </div>
     </section>
   );
